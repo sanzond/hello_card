@@ -1,0 +1,874 @@
+Directory structure:
+└── sanzond-hello_card/
+    ├── README.md
+    ├── __init__.py
+    ├── __manifest__.py
+    ├── static/
+    │   ├── description/
+    │   │   └── index.html
+    │   └── src/
+    │       ├── js/
+    │       │   ├── hello_demo_action.js
+    │       │   ├── hello_card/
+    │       │   │   ├── hello_card.js
+    │       │   │   └── hello_card.xml
+    │       │   └── hello_demo/
+    │       │       ├── hello_demo.js
+    │       │       └── hello_demo.xml
+    │       └── scss/
+    │           └── hello_card.scss
+    └── views/
+        └── hello_demo_views.xml
+
+================================================
+FILE: README.md
+================================================
+# Hello Card Demo Module
+
+## 概述
+Hello Card 是一个演示模块，展示如何在 Odoo 18 中创建自定义 OWL 组件。
+
+## 功能特性
+- 🎯 自定义 HelloCard OWL 组件
+- ✨ 交互式演示界面
+- 📱 响应式设计 (Bootstrap 5)
+- ♿ 完整的键盘导航支持
+- 🎨 多种卡片配置选项
+- 🌙 深色模式支持
+
+## 安装步骤
+
+### 1. 复制模块文件
+将整个 `hello_card` 文件夹复制到您的 Odoo addons 目录中：
+```bash
+cp -r hello_card /path/to/your/odoo/addons/
+```
+
+### 2. 更新应用列表
+在 Odoo 后台：
+1. 进入 **Apps** 菜单
+2. 点击 **Update Apps List**
+3. 搜索 "Hello Card Demo"
+4. 点击 **Install**
+
+### 3. 访问演示
+安装完成后：
+1. 在主菜单中找到 **Hello Demo**
+2. 点击 **Card Demo** 子菜单
+3. 开始体验 HelloCard 组件
+
+## 文件结构
+```
+hello_card/
+├── __init__.py                           # 模块初始化
+├── __manifest__.py                       # 模块清单
+├── README.md                            # 说明文档
+├── static/
+│   ├── description/
+│   │   └── index.html                   # 模块描述页面
+│   └── src/
+│       ├── js/
+│       │   ├── hello_card/
+│       │   │   ├── hello_card.js        # HelloCard 组件
+│       │   │   └── hello_card.xml       # HelloCard 模板
+│       │   ├── hello_demo/
+│       │   │   ├── hello_demo.js        # 演示组件
+│       │   │   └── hello_demo.xml       # 演示模板
+│       │   └── hello_demo_action.js     # 客户端动作注册
+│       └── scss/
+│           └── hello_card.scss          # 样式文件
+└── views/
+    └── hello_demo_views.xml             # 菜单和动作定义
+```
+
+## 组件使用示例
+
+### 基本用法
+```javascript
+import { HelloCard } from '@hello_card/js/hello_card/hello_card';
+
+// 在您的组件中
+static components = { HelloCard };
+
+// 在模板中使用
+<HelloCard
+    title="'我的卡片'"
+    message="'这是一个示例消息'"
+    onClick="() => this.handleClick()"
+/>
+```
+
+### 高级配置
+```javascript
+<HelloCard
+    title="'高级卡片'"
+    message="'带有更多配置选项的卡片'"
+    color="'success'"
+    icon="'fa-star'"
+    showBadge="true"
+    badgeText="'热门'"
+    isSelected="state.selectedId === card.id"
+    onClick="() => this.selectCard(card)"
+/>
+```
+
+## 属性说明
+
+| 属性名 | 类型 | 必需 | 默认值 | 描述 |
+|--------|------|------|--------|------|
+| title | String | ✅ | - | 卡片标题 |
+| message | String | ✅ | - | 卡片消息内容 |
+| onClick | Function | ✅ | - | 点击事件处理函数 |
+| isSelected | Boolean | ❌ | false | 是否选中状态 |
+| color | String | ❌ | 'primary' | 卡片颜色主题 |
+| icon | String | ❌ | 'fa-heart' | FontAwesome 图标类名 |
+| showBadge | Boolean | ❌ | false | 是否显示徽章 |
+| badgeText | String | ❌ | 'New' | 徽章文本内容 |
+
+## 支持的颜色主题
+- `primary` (蓝色)
+- `secondary` (灰色)
+- `success` (绿色)
+- `danger` (红色)
+- `warning` (黄色)
+- `info` (青色)
+
+## 开发说明
+
+### 扩展组件
+您可以通过继承 HelloCard 来创建自定义版本：
+
+```javascript
+import { HelloCard } from '@hello_card/js/hello_card/hello_card';
+
+export class MyCustomCard extends HelloCard {
+    static template = 'my_module.CustomCard';
+    
+    static props = {
+        ...HelloCard.props,
+        customProp: { type: String, optional: true },
+    };
+    
+    // 添加自定义方法
+    myCustomMethod() {
+        // 自定义逻辑
+    }
+}
+```
+
+### 样式自定义
+您可以通过 CSS 覆盖默认样式：
+
+```scss
+.hello-card {
+    // 自定义样式
+    border-radius: 15px;
+    
+    &.my-custom-theme {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    }
+}
+```
+
+## 故障排除
+
+### 常见问题
+
+**问题**: 模块安装后菜单不显示
+- **解决**: 检查用户权限，确保有访问权限
+
+**问题**: 组件样式不正确
+- **解决**: 清除浏览器缓存，重启 Odoo 服务
+
+**问题**: JavaScript 错误
+- **解决**: 检查浏览器控制台，确保所有依赖正确加载
+
+### 调试模式
+启用 Odoo 调试模式以获得更多信息：
+```
+?debug=1
+```
+
+## 技术要求
+- Odoo 18.0+
+- 现代浏览器 (Chrome 90+, Firefox 88+, Safari 14+)
+- JavaScript ES6+ 支持
+
+## 许可证
+LGPL-3
+
+## 贡献
+欢迎提交 Issue 和 Pull Request！
+
+## 更新日志
+
+### v1.0.0
+- 初始版本发布
+- HelloCard 组件实现
+- 交互式演示界面
+- 响应式设计支持
+- 键盘导航功能
+
+
+================================================
+FILE: __init__.py
+================================================
+# -*- coding: utf-8 -*-
+# Hello Card Demo Module
+
+
+================================================
+FILE: __manifest__.py
+================================================
+{
+    'name': 'Hello Card Demo',
+    'version': '18.0.1.0.0',
+    'category': 'Tools',
+    'summary': 'HelloCard Component Demo',
+    'description': """
+        A simple demo module showing how to create and use
+        a custom HelloCard component in Odoo 18.
+        
+        Features:
+        - Custom HelloCard OWL component
+        - Interactive demo interface
+        - Responsive design with Bootstrap 5
+        - Keyboard accessibility support
+        - Multiple card configurations
+    """,
+    'author': 'Your Name',
+    'website': 'https://www.yourwebsite.com',
+    'depends': ['web'],
+    'data': [
+        'views/hello_demo_views.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'hello_card/static/src/js/hello_card/hello_card.js',
+            'hello_card/static/src/js/hello_card/hello_card.xml',
+            'hello_card/static/src/js/hello_demo/hello_demo.js',
+            'hello_card/static/src/js/hello_demo/hello_demo.xml',
+            'hello_card/static/src/js/hello_demo_action.js',
+            'hello_card/static/src/scss/hello_card.scss',
+        ],
+    },
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'license': 'LGPL-3',
+}
+
+
+================================================
+FILE: static/description/index.html
+================================================
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Card Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        .feature {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .feature h3 {
+            color: #495057;
+            margin-top: 0;
+        }
+        .code {
+            background: #f1f3f4;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .screenshot {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hello Card Demo</h1>
+        <p>A comprehensive example of creating custom OWL components in Odoo 18</p>
+    </div>
+
+    <div class="feature">
+        <h3>🎯 What is Hello Card?</h3>
+        <p>Hello Card is a demonstration module that shows how to create reusable OWL components in Odoo 18. It includes a custom HelloCard component and an interactive demo interface.</p>
+    </div>
+
+    <div class="feature">
+        <h3>✨ Features</h3>
+        <ul>
+            <li><strong>Custom OWL Component:</strong> HelloCard with configurable properties</li>
+            <li><strong>Interactive Demo:</strong> Live demonstration with multiple card configurations</li>
+            <li><strong>Responsive Design:</strong> Bootstrap 5 integration with mobile support</li>
+            <li><strong>Accessibility:</strong> Full keyboard navigation and ARIA support</li>
+            <li><strong>State Management:</strong> Selection tracking and click counting</li>
+            <li><strong>Modern Styling:</strong> CSS animations and hover effects</li>
+        </ul>
+    </div>
+
+    <div class="feature">
+        <h3>🚀 Quick Start</h3>
+        <ol>
+            <li>Install the module from Apps menu</li>
+            <li>Navigate to <strong>Hello Demo → Card Demo</strong></li>
+            <li>Interact with the cards to see the component in action</li>
+            <li>Check the browser console for click events</li>
+        </ol>
+    </div>
+
+    <div class="feature">
+        <h3>💻 Component Usage</h3>
+        <p>Use the HelloCard component in your own modules:</p>
+        <div class="code">
+import { HelloCard } from '@hello_card/js/hello_card/hello_card';
+
+// In your component
+static components = { HelloCard };
+
+// In your template
+&lt;HelloCard
+    title="'My Card'"
+    message="'Hello from my component!'"
+    color="'success'"
+    icon="'fa-star'"
+    onClick="() => this.handleClick()"
+/&gt;
+        </div>
+    </div>
+
+    <div class="feature">
+        <h3>🎨 Customization</h3>
+        <p>The HelloCard component supports various customization options:</p>
+        <ul>
+            <li><strong>Colors:</strong> primary, secondary, success, danger, warning, info</li>
+            <li><strong>Icons:</strong> Any FontAwesome icon class</li>
+            <li><strong>Badges:</strong> Optional badge with custom text</li>
+            <li><strong>Selection:</strong> Visual selection state</li>
+        </ul>
+    </div>
+
+    <div class="feature">
+        <h3>📚 Learning Resources</h3>
+        <p>This module serves as a practical example for:</p>
+        <ul>
+            <li>OWL Component development in Odoo 18</li>
+            <li>Props and state management</li>
+            <li>Event handling and user interaction</li>
+            <li>CSS styling and responsive design</li>
+            <li>Module structure and asset management</li>
+        </ul>
+    </div>
+
+    <div class="feature">
+        <h3>🔧 Technical Details</h3>
+        <ul>
+            <li><strong>Framework:</strong> OWL (Odoo Web Library)</li>
+            <li><strong>Styling:</strong> Bootstrap 5 + Custom SCSS</li>
+            <li><strong>Compatibility:</strong> Odoo 18.0+</li>
+            <li><strong>License:</strong> LGPL-3</li>
+        </ul>
+    </div>
+</body>
+</html>
+
+
+================================================
+FILE: static/src/js/hello_demo_action.js
+================================================
+/** @odoo-module **/
+
+import { registry } from '@web/core/registry';
+import { HelloDemo } from './hello_demo/hello_demo';
+
+// 注册客户端动作
+registry.category('actions').add('hello_demo_action', HelloDemo);
+
+
+================================================
+FILE: static/src/js/hello_card/hello_card.js
+================================================
+/** @odoo-module **/
+
+import { Component } from '@odoo/owl';
+
+export class HelloCard extends Component {
+    static template = 'hello_card.HelloCard';
+    
+    static props = {
+        // 必需属性
+        title: String,
+        message: String,
+        onClick: Function,
+        
+        // 可选属性
+        isSelected: { type: Boolean, optional: true },
+        color: { type: String, optional: true },
+        icon: { type: String, optional: true },
+        showBadge: { type: Boolean, optional: true },
+        badgeText: { type: String, optional: true },
+    };
+
+    static defaultProps = {
+        isSelected: false,
+        color: 'primary',
+        icon: 'fa-heart',
+        showBadge: false,
+        badgeText: 'New',
+    };
+
+    /**
+     * 获取卡片的CSS类名
+     * @returns {string} CSS类名字符串
+     */
+    get cardClasses() {
+        const baseClasses = 'hello-card card cursor-pointer';
+        const selectedClass = this.props.isSelected ? 'selected' : '';
+        const colorClass = `border-${this.props.color}`;
+        
+        return `${baseClasses} ${selectedClass} ${colorClass}`.trim();
+    }
+
+    /**
+     * 获取图标的CSS类名
+     * @returns {string} 图标CSS类名
+     */
+    get iconClasses() {
+        return `fa ${this.props.icon} me-2`;
+    }
+
+    /**
+     * 处理键盘事件
+     * @param {KeyboardEvent} event 键盘事件
+     */
+    onKeyPress(event) {
+        if (event.code === 'Space' || event.code === 'Enter') {
+            event.preventDefault();
+            this.props.onClick();
+        }
+    }
+
+    /**
+     * 获取徽章的CSS类名
+     * @returns {string} 徽章CSS类名
+     */
+    get badgeClasses() {
+        return `badge bg-${this.props.color}`;
+    }
+}
+
+
+================================================
+FILE: static/src/js/hello_card/hello_card.xml
+================================================
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hello_card.HelloCard">
+        <div
+            tabindex="0"
+            t-attf-class="{{cardClasses}}"
+            t-on-click="props.onClick"
+            t-on-keypress="onKeyPress"
+            role="button"
+            t-attf-aria-label="Hello card: {{props.title}}"
+            t-attf-aria-pressed="{{props.isSelected ? 'true' : 'false'}}"
+        >
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <i t-attf-class="{{iconClasses}}" aria-hidden="true"/>
+                    <h5 class="card-title mb-0" t-out="props.title"/>
+                </div>
+                <span 
+                    t-if="props.showBadge" 
+                    t-attf-class="{{badgeClasses}}"
+                    t-out="props.badgeText"
+                />
+            </div>
+            <div class="card-body">
+                <p class="card-text" t-out="props.message"/>
+                <div class="card-footer-info">
+                    <small class="text-muted">
+                        Click to interact with this card
+                    </small>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
+
+
+================================================
+FILE: static/src/js/hello_demo/hello_demo.js
+================================================
+/** @odoo-module **/
+
+import { Component, useState } from '@odoo/owl';
+import { HelloCard } from '../hello_card/hello_card';
+
+export class HelloDemo extends Component {
+    static template = 'hello_card.HelloDemo';
+    static components = { HelloCard };
+
+    setup() {
+        this.state = useState({
+            selectedCardId: null,
+            clickCount: 0,
+            cards: [
+                {
+                    id: 1,
+                    title: 'Hello World',
+                    message: 'This is my first HelloCard component!',
+                    color: 'primary',
+                    icon: 'fa-globe',
+                    showBadge: true,
+                    badgeText: 'New'
+                },
+                {
+                    id: 2,
+                    title: 'Welcome',
+                    message: 'Welcome to Odoo component development.',
+                    color: 'success',
+                    icon: 'fa-check-circle',
+                    showBadge: false,
+                },
+                {
+                    id: 3,
+                    title: 'Learning',
+                    message: 'Learning OWL framework is fun and easy!',
+                    color: 'info',
+                    icon: 'fa-graduation-cap',
+                    showBadge: true,
+                    badgeText: 'Hot'
+                },
+                {
+                    id: 4,
+                    title: 'Development',
+                    message: 'Building reusable components in Odoo.',
+                    color: 'warning',
+                    icon: 'fa-code',
+                    showBadge: false,
+                }
+            ]
+        });
+    }
+
+    /**
+     * 处理卡片点击事件
+     * @param {Object} card 被点击的卡片对象
+     */
+    onCardClick(card) {
+        this.state.selectedCardId = card.id;
+        this.state.clickCount++;
+        
+        // 显示通知或执行其他操作
+        console.log(`Card "${card.title}" clicked! Total clicks: ${this.state.clickCount}`);
+        
+        // 可以添加更多交互逻辑
+        this.showNotification(card);
+    }
+
+    /**
+     * 显示通知消息
+     * @param {Object} card 卡片对象
+     */
+    showNotification(card) {
+        // 这里可以集成 Odoo 的通知系统
+        // 或者使用简单的 alert 作为演示
+        alert(`You clicked on "${card.title}"!\nMessage: ${card.message}`);
+    }
+
+    /**
+     * 重置选择状态
+     */
+    resetSelection() {
+        this.state.selectedCardId = null;
+        this.state.clickCount = 0;
+    }
+
+    /**
+     * 检查卡片是否被选中
+     * @param {Object} card 卡片对象
+     * @returns {boolean} 是否选中
+     */
+    isCardSelected(card) {
+        return this.state.selectedCardId === card.id;
+    }
+
+    /**
+     * 获取统计信息
+     * @returns {string} 统计文本
+     */
+    get statsText() {
+        const selectedCard = this.state.cards.find(card => card.id === this.state.selectedCardId);
+        const selectedText = selectedCard ? `Selected: ${selectedCard.title}` : 'No selection';
+        return `${selectedText} | Total clicks: ${this.state.clickCount}`;
+    }
+}
+
+
+================================================
+FILE: static/src/js/hello_demo/hello_demo.xml
+================================================
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hello_card.HelloDemo">
+        <div class="hello-demo-container p-4">
+            <div class="demo-header mb-4">
+                <h2 class="mb-3">HelloCard Component Demo</h2>
+                <p class="text-muted">
+                    This demo shows how to use the HelloCard component with different configurations.
+                </p>
+                
+                <div class="demo-stats alert alert-info">
+                    <i class="fa fa-info-circle me-2"/>
+                    <span t-out="statsText"/>
+                </div>
+                
+                <button 
+                    class="btn btn-secondary mb-3" 
+                    t-on-click="resetSelection"
+                    type="button"
+                >
+                    <i class="fa fa-refresh me-1"/>
+                    Reset Selection
+                </button>
+            </div>
+            
+            <div class="demo-content">
+                <div class="row g-3">
+                    <div 
+                        t-foreach="state.cards" 
+                        t-as="card" 
+                        t-key="card.id"
+                        class="col-12 col-md-6 col-lg-4"
+                    >
+                        <HelloCard
+                            title="card.title"
+                            message="card.message"
+                            color="card.color"
+                            icon="card.icon"
+                            showBadge="card.showBadge"
+                            badgeText="card.badgeText"
+                            isSelected="isCardSelected(card)"
+                            onClick="() => this.onCardClick(card)"
+                        />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-footer mt-4">
+                <div class="alert alert-light">
+                    <h5>Usage Instructions:</h5>
+                    <ul class="mb-0">
+                        <li>Click on any card to select it</li>
+                        <li>Use Tab key to navigate between cards</li>
+                        <li>Press Space or Enter to activate focused card</li>
+                        <li>Click "Reset Selection" to clear the selection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
+
+
+================================================
+FILE: static/src/scss/hello_card.scss
+================================================
+.hello-card {
+    transition: all 0.3s ease;
+    border-width: 2px;
+    max-width: 300px;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    &.selected {
+        background-color: #f8f9fa;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        
+        .card-header {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+    }
+    
+    .card-header {
+        background-color: transparent;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+    
+    .card-title {
+        color: #495057;
+        font-weight: 600;
+    }
+    
+    .card-text {
+        color: #6c757d;
+        margin-bottom: 1rem;
+    }
+    
+    .card-footer-info {
+        border-top: 1px solid rgba(0, 0, 0, 0.125);
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+    }
+}
+
+.hello-demo-container {
+    .demo-header {
+        h2 {
+            color: #495057;
+            font-weight: 600;
+        }
+        
+        .demo-stats {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+    }
+    
+    .demo-content {
+        .row {
+            justify-content: center;
+        }
+    }
+    
+    .demo-footer {
+        .alert {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+            
+            h5 {
+                color: #495057;
+                margin-bottom: 0.75rem;
+            }
+            
+            ul {
+                color: #6c757d;
+                
+                li {
+                    margin-bottom: 0.25rem;
+                }
+            }
+        }
+    }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+    .hello-card {
+        max-width: 100%;
+    }
+    
+    .hello-demo-container {
+        padding: 1rem !important;
+        
+        .demo-header {
+            text-align: center;
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+
+// 深色模式支持
+@media (prefers-color-scheme: dark) {
+    .hello-card {
+        background-color: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+        
+        .card-title {
+            color: #f7fafc;
+        }
+        
+        .card-text {
+            color: #cbd5e0;
+        }
+        
+        .card-footer-info {
+            border-color: #4a5568;
+            
+            small {
+                color: #a0aec0;
+            }
+        }
+        
+        &.selected {
+            background-color: #1a202c;
+            
+            .card-header {
+                background-color: rgba(66, 153, 225, 0.2);
+            }
+        }
+    }
+}
+
+
+================================================
+FILE: views/hello_demo_views.xml
+================================================
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 客户端动作定义 -->
+    <record id="action_hello_demo" model="ir.actions.client">
+        <field name="name">Hello Card Demo</field>
+        <field name="tag">hello_demo_action</field>
+    </record>
+
+    <!-- 菜单项定义 -->
+    <menuitem 
+        id="menu_hello_demo_root"
+        name="Hello Demo"
+        web_icon="hello_card,static/description/icon.png"
+        sequence="100">
+        
+        <menuitem 
+            id="menu_hello_demo"
+            name="Card Demo"
+            action="action_hello_demo"
+            sequence="10"/>
+    </menuitem>
+</odoo>
+
