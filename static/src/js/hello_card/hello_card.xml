@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hello_card.HelloCard">
+        <div
+            tabindex="0"
+            t-attf-class="{{cardClasses}}"
+            t-on-click="props.onClick"
+            t-on-keypress="onKeyPress"
+            role="button"
+            t-attf-aria-label="Hello card: {{props.title}}"
+            t-attf-aria-pressed="{{props.isSelected ? 'true' : 'false'}}"
+        >
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <i t-attf-class="{{iconClasses}}" aria-hidden="true"/>
+                    <h5 class="card-title mb-0" t-out="props.title"/>
+                </div>
+                <span 
+                    t-if="props.showBadge" 
+                    t-attf-class="{{badgeClasses}}"
+                    t-out="props.badgeText"
+                />
+            </div>
+            <div class="card-body">
+                <p class="card-text" t-out="props.message"/>
+                <div class="card-footer-info">
+                    <small class="text-muted">
+                        Click to interact with this card
+                    </small>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

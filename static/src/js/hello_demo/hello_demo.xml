@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hello_card.HelloDemo">
+        <div class="hello-demo-container p-4">
+            <div class="demo-header mb-4">
+                <h2 class="mb-3">HelloCard Component Demo</h2>
+                <p class="text-muted">
+                    This demo shows how to use the HelloCard component with different configurations.
+                </p>
+                
+                <div class="demo-stats alert alert-info">
+                    <i class="fa fa-info-circle me-2"/>
+                    <span t-out="statsText"/>
+                </div>
+                
+                <button 
+                    class="btn btn-secondary mb-3" 
+                    t-on-click="resetSelection"
+                    type="button"
+                >
+                    <i class="fa fa-refresh me-1"/>
+                    Reset Selection
+                </button>
+            </div>
+            
+            <div class="demo-content">
+                <div class="row g-3">
+                    <div 
+                        t-foreach="state.cards" 
+                        t-as="card" 
+                        t-key="card.id"
+                        class="col-12 col-md-6 col-lg-4"
+                    >
+                        <HelloCard
+                            title="card.title"
+                            message="card.message"
+                            color="card.color"
+                            icon="card.icon"
+                            showBadge="card.showBadge"
+                            badgeText="card.badgeText"
+                            isSelected="isCardSelected(card)"
+                            onClick="() => this.onCardClick(card)"
+                        />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-footer mt-4">
+                <div class="alert alert-light">
+                    <h5>Usage Instructions:</h5>
+                    <ul class="mb-0">
+                        <li>Click on any card to select it</li>
+                        <li>Use Tab key to navigate between cards</li>
+                        <li>Press Space or Enter to activate focused card</li>
+                        <li>Click "Reset Selection" to clear the selection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

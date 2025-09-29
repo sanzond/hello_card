@@ -1,0 +1,138 @@
+.hello-card {
+    transition: all 0.3s ease;
+    border-width: 2px;
+    max-width: 300px;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    &.selected {
+        background-color: #f8f9fa;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        
+        .card-header {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+    }
+    
+    .card-header {
+        background-color: transparent;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+    
+    .card-title {
+        color: #495057;
+        font-weight: 600;
+    }
+    
+    .card-text {
+        color: #6c757d;
+        margin-bottom: 1rem;
+    }
+    
+    .card-footer-info {
+        border-top: 1px solid rgba(0, 0, 0, 0.125);
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+    }
+}
+
+.hello-demo-container {
+    .demo-header {
+        h2 {
+            color: #495057;
+            font-weight: 600;
+        }
+        
+        .demo-stats {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+    }
+    
+    .demo-content {
+        .row {
+            justify-content: center;
+        }
+    }
+    
+    .demo-footer {
+        .alert {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+            
+            h5 {
+                color: #495057;
+                margin-bottom: 0.75rem;
+            }
+            
+            ul {
+                color: #6c757d;
+                
+                li {
+                    margin-bottom: 0.25rem;
+                }
+            }
+        }
+    }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+    .hello-card {
+        max-width: 100%;
+    }
+    
+    .hello-demo-container {
+        padding: 1rem !important;
+        
+        .demo-header {
+            text-align: center;
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+
+// 深色模式支持
+@media (prefers-color-scheme: dark) {
+    .hello-card {
+        background-color: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+        
+        .card-title {
+            color: #f7fafc;
+        }
+        
+        .card-text {
+            color: #cbd5e0;
+        }
+        
+        .card-footer-info {
+            border-color: #4a5568;
+            
+            small {
+                color: #a0aec0;
+            }
+        }
+        
+        &.selected {
+            background-color: #1a202c;
+            
+            .card-header {
+                background-color: rgba(66, 153, 225, 0.2);
+            }
+        }
+    }
+}
